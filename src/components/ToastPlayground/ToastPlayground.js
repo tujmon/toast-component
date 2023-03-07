@@ -6,6 +6,7 @@ import styles from "./ToastPlayground.module.css";
 import ToastShelf from "../ToastShelf";
 import { ToastContext } from "../ToastProvider";
 import useEscapeKey from "../../hooks/useEscapeKey";
+import VariantOptions from "../VariantOptions";
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
@@ -14,6 +15,7 @@ function ToastPlayground() {
 
   const {createNewToast,  removeAllToasts}= React.useContext(ToastContext);
   useEscapeKey(removeAllToasts);
+  
   function handleVariant(event) {
     if (event.target.checked) {
       console.log(event.target.value);
@@ -50,23 +52,9 @@ function ToastPlayground() {
         <div className={styles.row}>
           <div className={styles.label}>Variant</div>
           <div className={`${styles.inputWrapper} ${styles.radioWrapper}`}>
-            {VARIANT_OPTIONS.map((variant, index) => {
-              return (
-                <label key={index} htmlFor={`variant-${variant}`}>
-                  <input
-                    id={`variant-${variant}`}
-                    type="radio"
-                    name="variant"
-                    value={variant}
-                    onChange={(event) => handleVariant(event)}
-                  />
-                  {variant}
-                </label>
-              );
-            })}
+            <VariantOptions variants={VARIANT_OPTIONS} handleVariant={handleVariant}/>
           </div>
         </div>
-
         <div className={styles.row}>
           <div className={styles.label} />
           <div className={`${styles.inputWrapper} ${styles.radioWrapper}`}>
